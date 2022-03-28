@@ -1,0 +1,39 @@
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips
+spec:
+  type: ClusterIP
+  selector:
+    app: trips
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 8080
+    - protocol: TCP
+      name: https
+      port: 443
+      targetPort: 8443
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: aks-trip-poi
+#   annotations:
+#     kubernetes.io/ingress.class: addon-http-application-routing
+# spec:
+#   rules:
+#   - host: aks-trip-poi.d4ffc14f869047d1a2bc.australiaeast.aksapp.io
+#     http:
+#       paths:
+#       - path: /api/poi
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: poi
+#             port:
+#               number: 80
+
