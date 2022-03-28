@@ -22,7 +22,7 @@ namespace poi.Utility
             connectionString = connectionString.Replace("[SQL_PASSWORD]", SQL_PASSWORD);
             connectionString = connectionString.Replace("[SQL_SERVER]", SQL_SERVER);
             connectionString = connectionString.Replace("[SQL_DBNAME]", SQL_DBNAME);
-
+            connectionString += ";TrustServerCertificate=true";
             return connectionString;
         }
 
