@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+  labels:
+    deploy: poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - image: "registryuyt1849.azurecr.io/poi:1.0"
+        imagePullPolicy: Always
+        name: poi
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        env:
+        - name: WEB_SERVER_BASE_URI
+          value: 'http://0.0.0.0'
+        - name: WEB_PORT
+          value: '80'
+        - name: ASPNETCORE_ENVIRONMENT
+          value: 'Production'
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_user
+              optional: false 
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_password
+              optional: false 
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_server
+              optional: false 

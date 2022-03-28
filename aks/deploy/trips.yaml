@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+  labels:
+    deploy: trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - image: "registryuyt1849.azurecr.io/trips:1.0"
+        imagePullPolicy: Always
+        name: trips
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        env:
+        - name: OPENAPI_DOCS_URI
+          value: 'http://0.0.0.0'
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_user
+              optional: false 
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_password
+              optional: false 
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: sql-secret
+              key: sql_server
+              optional: false 
