@@ -1,0 +1,46 @@
+az aks get-credentials --resource-group teamResources --name test-aks-oh
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sql
+type: Opaque
+data:
+  SQL_USER: "{{base64 encoded sql_user}}"
+  SQL_PASSWORD: "{{base64 encoded sql_password}}"
+  SQL_SERVER: "{{base64 encoded sql_server}}"
+  SQL_DBNAME: "{{base64 encoded sql_dbname}}"
+
+
+kubectl get secret sql-secret -o jsonpath='{.data.*}' | base64 -d
+
+az aks update -n test-aks-oh -g teamResources --attach-acr registryuyt1849
+
+kubectl get namespace
+kubectl create namespace userjava
+kubectl apply -f
+
+kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
+
+kubectl create namespace poi
+kubectl create namespace trip-api
+kubectl create namespace userjava
+kubectl create namespace user
+
+kubectl create secret generic sql-secret --namespace poi --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+kubectl create secret generic sql-secret --namespace trip-api --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+kubectl create secret generic sql-secret --namespace userjava --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+kubectl create secret generic sql-secret --namespace user --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+
+kubectl apply -f ./containers_artifacts/aks/deploy/poi.yaml -n poi
+kubectl apply -f ./containers_artifacts/aks/deploy/trips.yaml -n trip-api
+kubectl apply -f ./containers_artifacts/aks/deploy/userjava.yaml -n userjava
+kubectl apply -f ./containers_artifacts/aks/deploy/user.yaml -n user
+
+kubectl get deployments -n poi
+kubectl get deployment -n trip-api
+kubectl get deployments -n userjava
+kubectl get deployments -n user
+
+kubectl describe service -n userjava
+kubectl describe service -n user

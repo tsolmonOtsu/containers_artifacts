@@ -1,0 +1,40 @@
+## To resolve ubuntu 
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+sudo echo "nameserver 172.17.0.1" > /etc/resolv.conf
+
+sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=QWEqwe12" \
+   -p 1433:1433 --name sql1 --hostname sql1 \
+   -d \
+   mcr.microsoft.com/mssql/server:2017-latest
+
+sudo az acr login --name registryuyt1849
+
+d5490e28987a
+
+sudo docker exec -it sql1 "bash"
+
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "QWEqwe12"
+
+CREATE DATABASE mydrivingDB
+SELECT Name from sys.Databases
+
+sudo docker run --network bridge -e SQLFQDN=sql1 -e SQLUSER=sa -e SQLPASS=QWEqwe12 -e SQLDB=mydrivingDB registryuyt1849.azurecr.io/dataload:1.0
+sudo docker run --network bridge -e SQLFQDN=172.25.199.183 -e SQLUSER=sa -e SQLPASS=QWEqwe12 -e SQLDB=mydrivingDB registryuyt1849.azurecr.io/dataload:1.0
+
+sudo docker build -f ../../dockerfiles/Dockerfile_3 -t "tripinsights/poi:1.0" --no-cache --build-arg IMAGE_VERSION="1.0" --build-arg IMAGE_CREATE_DATE="`date -u +"%Y-%m-%dT%H:%M:%SZ"`" --build-arg IMAGE_SOURCE_REVISION="`git rev-parse HEAD`" .
+
+sudo docker run --network bridge -d -p 8080:80 --name poi -e "SQL_PASSWORD=QWEqwe12" -e "SQL_SERVER=172.17.0.1" -e "SQL_USER=sa" tripinsights/poi:1.0
+
+registryuyt1849
+
+docker tag 53b78b4e5709 registryuyt1849.azurecr.io/poi:1.0
+
+
+sudo docker build -f ../../dockerfiles/Dockerfile_0 -t "tripinsights/userjava:1.0" --no-cache --build-arg IMAGE_VERSION="1.0" --build-arg IMAGE_CREATE_DATE="`date -u +"%Y-%m-%dT%H:%M:%SZ"`" --build-arg IMAGE_SOURCE_REVISION="`git rev-parse HEAD`" .
+docker tag 365c812a4e37 registryuyt1849.azurecr.io/userjava:1.0
+
+sudo docker build -f ../../dockerfiles/Dockerfile_2 -t "tripinsights/user:1.0" --no-cache --build-arg IMAGE_VERSION="1.0" --build-arg IMAGE_CREATE_DATE="`date -u +"%Y-%m-%dT%H:%M:%SZ"`" --build-arg IMAGE_SOURCE_REVISION="`git rev-parse HEAD`" .
+sudo docker tag 00d6c7c85728 registryuyt1849.azurecr.io/user:1.0
+
+sudo docker push registryuyt1849.azurecr.io/user:1.0
+sudo docker push registryuyt1849.azurecr.io/userjava:1.0
