@@ -15,7 +15,7 @@ spec:
         app: insurance
     spec:
       containers:
-        - image: "replaceme.io/insurance:1.0"
+        - image: "registryuyt1849.azurecr.io/insurance:1.0"
           imagePullPolicy: Always
           name: insurance
           ports:
