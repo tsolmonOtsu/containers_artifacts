@@ -1,0 +1,21 @@
+kubectl create namespace web
+kubectl create namespace api
+
+kubectl create secret generic sql-secret --namespace web --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+kubectl create secret generic sql-secret --namespace api --from-literal sql_server="sqlserveruyt1849.database.windows.net" --from-literal sql_dbname="mydrivingDB" --from-literal sql_user="sqladminuYt1849" --from-literal sql_password="_X2b3es{(ty^BM9_"
+
+kubectl apply -f ./containers_artifacts/aks/deploy/poi.yaml -n api
+kubectl apply -f ./containers_artifacts/aks/deploy/trips.yaml -n api
+kubectl apply -f ./containers_artifacts/aks/deploy/userjava.yaml -n api
+kubectl apply -f ./containers_artifacts/aks/deploy/user.yaml -n api
+kubectl apply -f ./containers_artifacts/aks/deploy/tripviewer.yaml -n web
+
+kubectl get deployments -n poi
+kubectl get deployment -n trip-api
+kubectl get deployments -n userjava
+kubectl get deployments -n user
+
+kubectl describe service -n userjava
+kubectl describe service -n user
+
+kubectl apply -f ./containers_artifacts/aks/rolebinding/api-rolebinding.yaml -n api
