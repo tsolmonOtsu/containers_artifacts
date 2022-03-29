@@ -16,7 +16,7 @@ spec:
         app: poi
     spec:
       containers:
-      - image: "registryuyt1849.azurecr.io/tripinsights/poi:1.0"
+      - image: "registryuyt1849.azurecr.io/poi:1.0"
         imagePullPolicy: Always
         name: poi
         ports:

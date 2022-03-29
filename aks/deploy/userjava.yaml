@@ -28,24 +28,18 @@ spec:
           env:
             - name: OPENAPI_DOCS_URI
               value: "http://0.0.0.0"
-            - name: SQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: sql-secret
-                  key: sql_user
-                  optional: false
-            - name: SQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: sql-secret
-                  key: sql_password
-                  optional: false
-            - name: SQL_SERVER
-              valueFrom:
-                secretKeyRef:
-                  name: sql-secret
-                  key: sql_server
-                  optional: false
+          volumeMounts:
+            - name: secrets-store
+              mountPath: "/secrets"
+              readOnly: true
+      volumes:
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: kv-sql
+
 ---
 apiVersion: v1
 kind: Service
