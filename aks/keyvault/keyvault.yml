@@ -1,0 +1,31 @@
+# This is a SecretProviderClass example using aad-pod-identity to access the key vault
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: azure-kvname-podid
+spec:
+  provider: azure
+  parameters:
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: "751847db-3ef5-42d6-aa29-a2fae3bf3259"
+    keyvaultName: "trips-kv"       # Set to the name of your key vault
+    cloudName: ""                        # [OPTIONAL for Azure] if not provided, the Azure environment defaults to AzurePublicCloud
+    objects:  |
+      array:
+        - |
+          objectName: "sql-server"
+          objectAlias: "sql_server"
+          objectType: secret             # object types: secret, key, or cert
+        - |
+          objectName: "sql-dbname"
+          objectAlias: "sql_dbname"
+          objectType: secret             # object types: secret, key, or cert
+        - |
+          objectName: "sql-user"
+          objectAlias: "sql_user"
+          objectType: secret             # object types: secret, key, or cert
+        - |
+          objectName: "sql-password"
+          objectAlias: "sql_password"
+          objectType: secret             # object types: secret, key, or cert
+    tenantId: "51bc5a8e-cae6-404c-a1c9-00bd7471e062"                # The tenant ID of the key vault
