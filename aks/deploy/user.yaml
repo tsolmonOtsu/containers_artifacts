@@ -15,7 +15,7 @@ spec:
         app: user
     spec:
       containers:
-        - image: "registryuyt1849.azurecr.io/user:1.0"
+        - image: "registryuyt1849.azurecr.io/user:1.1"
           imagePullPolicy: Always
           name: user
           ports:
@@ -57,9 +57,9 @@ spec:
     - protocol: TCP
       name: http
       port: 80
-      targetPort: 8080
+      targetPort: 80
     - protocol: TCP
       name: https
       port: 443
-      targetPort: 8443
+      targetPort: 443
 

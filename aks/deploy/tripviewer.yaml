@@ -29,23 +29,23 @@ spec:
             - name: TRIPS_API_ENDPOINT
               value: "http://10.0.185.150"
             - name: USERPROFILE_API_ENDPOINT
-              value: "http://0.0.0.0"
+              value: "http://10.0.16.206"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: tripviewer
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: tripviewer
   ports:
     - protocol: TCP
       name: http
       port: 80
-      targetPort: 8080
+      targetPort: 80
     - protocol: TCP
       name: https
       port: 443
-      targetPort: 8443
+      targetPort: 443
 

@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: OPENAPI_DOCS_URI
-              value: "http://0.0.0.0"
+              value: "http://localhost"
             - name: SQL_USER
               valueFrom:
                 secretKeyRef:
@@ -59,8 +59,8 @@ spec:
     - protocol: TCP
       name: http
       port: 80
-      targetPort: 8080
+      targetPort: 80
     - protocol: TCP
       name: https
       port: 443
-      targetPort: 8443
+      targetPort: 443
