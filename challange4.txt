@@ -7,3 +7,5 @@ sql-password="_X2b3es{(ty^BM9_"
 
 export SECRETS_PROVIDER_IDENTITY=$(az aks show -g teamResources -n test-aks-private001 --query "addonProfiles.azureKeyvaultSecretsProvider.identity.clientId" -o tsv)
 az keyvault set-policy -n trips-kv --secret-permissions get --spn $SECRETS_PROVIDER_IDENTITY
+
+kubectl exec -n api --stdin --tty poi-6587c8bc6f-qqldq -- curl http://10.0.82.11/api/poi
