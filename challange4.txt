@@ -1,0 +1,9 @@
+
+sql-server="sqlserveruyt1849.database.windows.net" 
+sql-dbname="mydrivingDB" 
+sql-user="sqladminuYt1849"
+sql-password="_X2b3es{(ty^BM9_"
+
+
+export SECRETS_PROVIDER_IDENTITY=$(az aks show -g teamResources -n test-aks-private001 --query "addonProfiles.azureKeyvaultSecretsProvider.identity.clientId" -o tsv)
+az keyvault set-policy -n trips-kv --secret-permissions get --spn $SECRETS_PROVIDER_IDENTITY

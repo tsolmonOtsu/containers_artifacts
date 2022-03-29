@@ -2,7 +2,7 @@
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: azure-kvname-podid
+  name: kv-sql
 spec:
   provider: azure
   parameters:
@@ -14,18 +14,18 @@ spec:
       array:
         - |
           objectName: "sql-server"
-          objectAlias: "sql_server"
+          objectAlias: "SQL_SERVER"
           objectType: secret             # object types: secret, key, or cert
         - |
           objectName: "sql-dbname"
-          objectAlias: "sql_dbname"
+          objectAlias: "SQL_DBNAME"
           objectType: secret             # object types: secret, key, or cert
         - |
           objectName: "sql-user"
-          objectAlias: "sql_user"
+          objectAlias: "SQL_USER"
           objectType: secret             # object types: secret, key, or cert
         - |
           objectName: "sql-password"
-          objectAlias: "sql_password"
+          objectAlias: "SQL_PASSWORD"
           objectType: secret             # object types: secret, key, or cert
     tenantId: "51bc5a8e-cae6-404c-a1c9-00bd7471e062"                # The tenant ID of the key vault
