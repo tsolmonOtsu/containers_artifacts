@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trips
+  name: userjava
   labels:
-    deploy: trips
+    deploy: userjava
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: trips
+      app: userjava
   template:
     metadata:
       labels:
-        app: trips
+        app: userjava
     spec:
       containers:
-        - image: "registryuyt1849.azurecr.io/trips:1.0"
+        - image: "registryuyt1849.azurecr.io/userjava:1.0"
           imagePullPolicy: Always
-          name: trips
+          name: userjava
           ports:
             - containerPort: 80
               name: http
@@ -50,11 +50,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: trips
+  name: userjava
 spec:
   type: ClusterIP
   selector:
-    app: trips
+    app: userjava
   ports:
     - protocol: TCP
       name: http
@@ -64,3 +64,4 @@ spec:
       name: https
       port: 443
       targetPort: 8443
+

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trips
+  name: user
   labels:
-    deploy: trips
+    deploy: user
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: trips
+      app: user
   template:
     metadata:
       labels:
-        app: trips
+        app: user
     spec:
       containers:
-        - image: "registryuyt1849.azurecr.io/trips:1.0"
+        - image: "registryuyt1849.azurecr.io/user:1.0"
           imagePullPolicy: Always
-          name: trips
+          name: user
           ports:
             - containerPort: 80
               name: http
@@ -26,8 +26,6 @@ spec:
               name: https
               protocol: TCP
           env:
-            - name: OPENAPI_DOCS_URI
-              value: "http://0.0.0.0"
             - name: SQL_USER
               valueFrom:
                 secretKeyRef:
@@ -50,11 +48,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: trips
+  name: user
 spec:
   type: ClusterIP
   selector:
-    app: trips
+    app: user
   ports:
     - protocol: TCP
       name: http
@@ -64,3 +62,4 @@ spec:
       name: https
       port: 443
       targetPort: 8443
+
