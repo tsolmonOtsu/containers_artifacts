@@ -1,0 +1,3 @@
+kubectl exec -n api --stdin --tty poi-74985f4944-twbdt -- curl http://10.0.82.11/api/poi
+
+
