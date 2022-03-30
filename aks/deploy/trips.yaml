@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: trips
+        aadpodidbinding: pod-identity
     spec:
       containers:
         - image: "registryuyt1849.azurecr.io/trips:1.0"
@@ -28,17 +29,23 @@ spec:
           env:
             - name: OPENAPI_DOCS_URI
               value: "http://localhost"
-          volumeMounts:
-            - name: secrets-store
-              mountPath: "/secrets"
-              readOnly: true
-      volumes:
-        - name: secrets-store
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: kv-sql
+            - name: CREDENTIAL_METHOD
+              value: "managed_identity"
+            - name: IDENTITY_CLIENT_ID
+              value: "a9242564-a787-40d1-8217-89b9b6fe2ffa"
+            - name: SQL_SERVER
+              value: "sqlserveruyt1849.database.windows.net"
+      #     volumeMounts:
+      #       - name: secrets-store
+      #         mountPath: "/secrets"
+      #         readOnly: true
+      # volumes:
+      #   - name: secrets-store
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: kv-sql
 ---
 apiVersion: v1
 kind: Service
