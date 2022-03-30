@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: poi
+        role: api
     spec:
       containers:
       - image: "registryuyt1849.azurecr.io/poi:1.0"

@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: trips
+        role: api
         aadpodidbinding: pod-identity
     spec:
       containers:

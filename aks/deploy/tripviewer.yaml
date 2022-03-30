@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: tripviewer
+        role: web
     spec:
       containers:
         - image: "registryuyt1849.azurecr.io/tripviewer:1.0"
